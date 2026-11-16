@@ -1,25 +1,287 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja pierwsza strona</title>
+    <title>Wavelets: From Formula to Code</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 700px;
-            margin: 50px auto;
-            padding: 20px;
-            line-height: 1.6;
-            background-color: #f4f4f9;
-            color: #333;
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent-hover: #0284c7;
+            --border: #1e293b;
         }
-        h1 { color: #0366d6; }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: radial-gradient(circle at top right, #172554, var(--bg-color) 60%);
+            padding: 5rem 1.5rem 4rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ffffff, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.75rem;
+            font-weight: 400;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .wave-graphic {
+            width: 100%;
+            max-width: 500px;
+            height: 70px;
+            margin: 0 auto 2.5rem;
+            display: block;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #0b0f19;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+        }
+
+        main {
+            padding: 4rem 1.5rem;
+            flex: 1;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.75rem;
+        }
+
+        .card h3 {
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .code-section {
+            background-color: #070a11;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background-color: var(--card-bg);
+            padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        pre {
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: "Fira Code", Consolas, Monaco, monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        .kw { color: #c084fc; }
+        .fn { color: #38bdf8; }
+        .str { color: #4ade80; }
+        .cm { color: #64748b; }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.35rem; }
+        }
     </style>
 </head>
 <body>
-    <h1>Cześć! To moja strona na GitHubie</h1>
-    <p>Strona działa poprawnie. Mogę tu teraz dodać swój tekst, zdjęcia lub linki.</p>
-    <p>Zobacz mój profil: <a href="https://github.com">GitHub</a></p>
+
+    <header>
+        <div class="container">
+            <span class="badge">Official Companion Repository</span>
+            <h1>Wavelets</h1>
+            <div class="subtitle">From Formula to Code</div>
+            <p class="tagline">Wavelet analysis: theory, computation, and programs in Python</p>
+
+            <!-- Stylized Morlet Wavelet SVG -->
+            <svg class="wave-graphic" viewBox="0 0 500 80" fill="none" xmlns="http://w3.org">
+                <path d="M0 40 Q 60 40, 100 38 T 160 45 T 200 20 T 230 65 T 250 10 T 270 65 T 300 20 T 340 45 T 400 38 Q 440 40, 500 40" 
+                      stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="0" y1="40" x2="500" y2="40" stroke="#1e293b" stroke-width="1" stroke-dasharray="4 4"/>
+            </svg>
+
+            <div class="cta-group">
+                <!-- Zmień poniższy link na adres swojego repozytorium GitHub -->
+                <a href="https://github.com" class="btn btn-primary" id="repo-link">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    Explore Source Code
+                </a>
+                <a href="#preview" class="btn btn-secondary">Code Preview</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="grid">
+            <div class="card">
+                <h3>Mathematical Theory</h3>
+                <p>Clear derivations bridging continuous and discrete wavelet transforms, multiresolution analysis, and filter banks without unnecessary abstraction.</p>
+            </div>
+            <div class="card">
+                <h3>Numerical Computation</h3>
+                <p>Step-by-step algorithms for fast wavelet transforms, boundary handling, and signal denoising ready for real-world engineering problems.</p>
+            </div>
+            <div class="card">
+                <h3>Python Implementations</h3>
+                <p>All source code from the book is openly available in this repository. Run, modify, and experiment with clean, reproducible Python scripts.</p>
+            </div>
+        </div>
+
+        <div class="code-section" id="preview">
+            <div class="code-header">
+                <span>example_dwt.py</span>
+                <span>Python 3</span>
+            </div>
+            <pre><code><span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="kw">def</span> <span class="fn">haar_step</span>(signal):
+    <span class="str">"""Single-level 1D Discrete Haar Wavelet Transform."""</span>
+    n = <span class="fn">len</span>(signal)
+    approx = (signal[0:n:2] + signal[1:n:2]) / np.sqrt(2)
+    detail = (signal[0:n:2] - signal[1:n:2]) / np.sqrt(2)
+    <span class="kw">return</span> approx, detail
+
+<span class="cm"># Source code for all chapters is hosted in this GitHub repository</span>
+x = np.array([4.0, 6.0, 10.0, 12.0, 8.0, 6.0, 5.0, 5.0])
+cA, cD = <span class="fn">haar_step</span>(x)
+<span class="fn">print</span>(<span class="str">"Approximation:"</span>, cA)</code></pre>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Wavelets: From Formula to Code. Source code available under open repository license.</p>
+    </footer>
+
+    <script>
+        // Automatycznie ustawia link przycisku na główne repozytorium GitHub użytkownika
+        const host = window.location.hostname;
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
+        if (host.endsWith('github.io') && pathParts.length > 0) {
+            const username = host.split('.')[0];
+            const repo = pathParts[0];
+            document.getElementById('repo-link').href = `https://github.com{username}/${repo}`;
+        }
+    </script>
+
 </body>
 </html>
