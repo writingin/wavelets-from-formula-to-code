@@ -78,15 +78,16 @@
             font-size: 1.15rem;
             color: var(--text-muted);
             max-width: 600px;
-            margin: 0 auto 2.5rem;
+            margin: 0 auto 2rem;
         }
 
         .wave-graphic {
             width: 100%;
-            max-width: 500px;
-            height: 70px;
+            max-width: 540px;
+            height: 110px;
             margin: 0 auto 2.5rem;
             display: block;
+            overflow: visible;
         }
 
         .cta-group {
@@ -213,15 +214,13 @@
             <div class="subtitle">From Formula to Code</div>
             <p class="tagline">Wavelet analysis: theory, computation, and programs in Python</p>
 
-            <!-- Stylized Morlet Wavelet SVG -->
-            <svg class="wave-graphic" viewBox="0 0 500 80" fill="none" xmlns="http://w3.org">
-                <path d="M0 40 Q 60 40, 100 38 T 160 45 T 200 20 T 230 65 T 250 10 T 270 65 T 300 20 T 340 45 T 400 38 Q 440 40, 500 40" 
-                      stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
-                <line x1="0" y1="40" x2="500" y2="40" stroke="#1e293b" stroke-width="1" stroke-dasharray="4 4"/>
+            <!-- Exact Morlet Wavelet SVG with full vertical margin -->
+            <svg class="wave-graphic" viewBox="0 0 500 120" fill="none" xmlns="http://w3.org">
+                <line x1="0" y1="60" x2="500" y2="60" stroke="#1e293b" stroke-width="1" stroke-dasharray="4 4"/>
+                <path id="morlet-path" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
 
             <div class="cta-group">
-                <!-- Zmień poniższy link na adres swojego repozytorium GitHub -->
                 <a href="https://github.com" class="btn btn-primary" id="repo-link">
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                     Explore Source Code
@@ -273,15 +272,18 @@ cA, cD = <span class="fn">haar_step</span>(x)
     </footer>
 
     <script>
-        // Automatycznie ustawia link przycisku na główne repozytorium GitHub użytkownika
+        // Rysuje dokładną matematyczną falkę Morleta z bezpiecznym marginesem
+        const path = document.getElementById('morlet-path');
+        let d = '';
+        for (let x = 0; x <= 500; x += 2) {
+            const t = (x - 250) / 45;
+            const y = 60 - 45 * Math.exp(-0.5 * t * t) * Math.cos(5 * t);
+            d += (x === 0 ? `M ${x} ${y.toFixed(2)}` : ` L ${x} ${y.toFixed(2)}`);
+        }
+        path.setAttribute('d', d);
+
+        // Automatycznie ustawia link przycisku na główne repozytorium GitHub
         const host = window.location.hostname;
         const pathParts = window.location.pathname.split('/').filter(Boolean);
         if (host.endsWith('github.io') && pathParts.length > 0) {
-            const username = host.split('.')[0];
-            const repo = pathParts[0];
-            document.getElementById('repo-link').href = `https://github.com{username}/${repo}`;
-        }
-    </script>
-
-</body>
-</html>
+            const username = host.split('.');
