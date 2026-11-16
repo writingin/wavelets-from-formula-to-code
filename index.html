@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wavelets: From Formula to Code</title>
+    <meta name="author" content="Arkadiusz Liber">
+    <title>Wavelets: From Formula to Code — Arkadiusz Liber</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -71,11 +72,19 @@
             font-size: 1.75rem;
             font-weight: 400;
             color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .author {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--accent);
             margin-bottom: 1rem;
+            letter-spacing: 0.02em;
         }
 
         .tagline {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: var(--text-muted);
             max-width: 600px;
             margin: 0 auto 2rem;
@@ -212,9 +221,10 @@
             <span class="badge">Official Companion Repository</span>
             <h1>Wavelets</h1>
             <div class="subtitle">From Formula to Code</div>
+            <div class="author">by Arkadiusz Liber</div>
             <p class="tagline">Wavelet analysis: theory, computation, and programs in Python</p>
 
-                       <!-- Czyste, matematyczne SVG falki Morleta (bez JavaScriptu) -->
+            <!-- Czyste, matematyczne SVG falki Morleta -->
             <svg class="wave-graphic" viewBox="0 0 500 120" fill="none" xmlns="http://w3.org">
                 <line x1="0" y1="60" x2="500" y2="60" stroke="#1e293b" stroke-width="1" stroke-dasharray="4 4"/>
                 <path d="M 0 60 L 80 60 L 100 59.8 L 115 60.5 L 130 58.2 L 145 64.1 L 160 51.5 L 175 75.8 L 190 36.2 L 205 93.4 L 220 18.2 L 235 104.5 L 250 12.0 L 265 104.5 L 280 18.2 L 295 93.4 L 310 36.2 L 325 75.8 L 340 51.5 L 355 64.1 L 370 58.2 L 385 60.5 L 400 59.8 L 420 60 L 500 60" 
@@ -226,7 +236,8 @@
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                     Explore Source Code
                 </a>
-                <a href="#preview" class="btn btn-secondary">Code Preview</a>
+                <!-- W miejsce # wstaw link do strony sprzedaży książki -->
+                <a href="#" class="btn btn-secondary">Get the Book</a>
             </div>
         </div>
     </header>
@@ -269,22 +280,8 @@ cA, cD = <span class="fn">haar_step</span>(x)
     </main>
 
     <footer>
-        <p>&copy; 2026 Wavelets: From Formula to Code. Source code available under open repository license.</p>
+        <p>&copy; 2026 Arkadiusz Liber — <em>Wavelets: From Formula to Code</em>. Source code available under open repository license.</p>
     </footer>
 
     <script>
-        // Rysuje dokładną matematyczną falkę Morleta z bezpiecznym marginesem
-        const path = document.getElementById('morlet-path');
-        let d = '';
-        for (let x = 0; x <= 500; x += 2) {
-            const t = (x - 250) / 45;
-            const y = 60 - 45 * Math.exp(-0.5 * t * t) * Math.cos(5 * t);
-            d += (x === 0 ? `M ${x} ${y.toFixed(2)}` : ` L ${x} ${y.toFixed(2)}`);
-        }
-        path.setAttribute('d', d);
-
-        // Automatycznie ustawia link przycisku na główne repozytorium GitHub
         const host = window.location.hostname;
-        const pathParts = window.location.pathname.split('/').filter(Boolean);
-        if (host.endsWith('github.io') && pathParts.length > 0) {
-            const username = host.split('.');
